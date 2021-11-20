@@ -1,0 +1,17 @@
+<template>
+<div>
+    <lightning-card title="Person Details">
+
+        <p>
+            {user.firstName} {user.lastName}
+            <br/>
+            Location: {location}
+
+        </p>
+        <lightning-button slot="actions" onclick={updateUser} label="Update User"></lightning-button>
+
+
+    </lightning-card>
+
+</div>
+</template>
