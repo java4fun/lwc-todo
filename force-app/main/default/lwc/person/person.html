@@ -1,14 +1,20 @@
 <template>
-<div>
+<div style="width: 640px;">
     <lightning-card title="Person Details">
 
-        <p>
+        <p class="slds-p-around_medium">
             {user.firstName} {user.lastName}
             <br/>
             Location: {location}
+            <br/>
+            <template if:true={showDetails}>
+                {details}
+            </template>
 
         </p>
         <lightning-button slot="actions" onclick={updateUser} label="Update User"></lightning-button>
+        <lightning-button slot="actions" onclick={toggleDetails} label={actionButtonLabel}></lightning-button>
+
 
 
     </lightning-card>
