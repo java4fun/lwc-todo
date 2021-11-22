@@ -1,0 +1,17 @@
+# Source: https://youtu.be/FgnxcUQ5vho
+# 1. init project
+npm init -y
+
+
+# 2. install jest as dev (for development test)
+npm i --save-dev jest
+
+
+# 3. Update "test" in package.json:
+#  "scripts": {
+#    "test": "jest --coverage"
+#  },
+
+
+# 4. run jest test
+npm test

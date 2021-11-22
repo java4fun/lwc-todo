@@ -1,0 +1,4 @@
+.main {
+    background: var(--lwc-colorBackgroundAltInverse);
+    color: var(--lwc-colorTextInverse);
+}
