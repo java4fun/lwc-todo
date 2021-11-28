@@ -1,0 +1,26 @@
+
+<!-- this comp will be dropped to an account record page, so here recordId is the accountId -->
+<aura:component implements="flexipage:availableForRecordHome, force:hasRecordId" controller="MyContactController" access="global">
+    <aura:handler name="init" action="{!c.getContactsList}" value="{!this"/>
+    <aura:attribute name="contactList" type="List"/>
+
+    <lightning:card title="Contacts">
+        <p class="slds-p-horizontal_small">
+            <!-- apex:repeat -->
+            <aura:iteration items="{!v.contactList}" var="contact">
+                <lightning:recordViewForm recordId="{!contact.Id}" onjectApiName="Contact">
+                    <div class="slds-box slds-theme_default">
+                        <lightning:outputField fieldName="Name" />
+                        <lightning:outputField fieldName="Phone" />
+                        <lightning:outputField fieldName="Email" />
+                    </div>
+                </lightning:recordViewForm>
+                <br/>
+            </aura:iteration>
+        </p>
+
+        <aura:set attribute="actions">
+            <lightning:button label="New" onclick="{!c.newContact}" />
+        </aura:set>
+    </lightning:card>
+</aura:component>	
