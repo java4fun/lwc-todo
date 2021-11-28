@@ -1,0 +1,32 @@
+<!-- Lightning Component to display a record -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <!-- 
+        Using lightning:recordViewForm tag record Id and objectApiName is required to fetch record.
+        For custom objects, do check you have __c in the api name
+     -->
+	<lightning:recordViewForm recordId="{!v.recordId}" objectApiName="Contact">
+        <!-- Using lightning:card tag with a title -->
+        <lightning:card title="Contact Details">
+            <!-- lightning:card body section starts -->
+            <p class="slds-p-horizontal_small">
+                <!-- Forming a grid of two equal columns -->
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-2">
+                        <!-- 
+                            Using lightning:outputField Tag with fieldName = Api name of field,
+                            if you are using a custom field, do check you have __c in the api name
+                         -->
+                        <lightning:outputField fieldName="FirstName" />    
+                        <lightning:outputField fieldName="LastName" />    
+                        <lightning:outputField fieldName="MobilePhone" />    
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning:outputField fieldName="AccountId" />    
+                        <lightning:outputField fieldName="Department" />    
+                        <lightning:outputField fieldName="Birthdate" />    
+                    </div>
+                </div>
+            </p>
+        </lightning:card>        
+    </lightning:recordViewForm>
+</aura:component>
