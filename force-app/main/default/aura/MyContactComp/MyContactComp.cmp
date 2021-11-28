@@ -6,21 +6,41 @@
 
     <lightning:card title="Contacts">
         <p class="slds-p-horizontal_small">
+
+
             <!-- apex:repeat -->
-            <aura:iteration items="{!v.contactList}" var="contact">
-                <lightning:recordViewForm recordId="{!contact.Id}" onjectApiName="Contact">
+            <div aura:id="recordViewForm">
+                <aura:iteration items="{!v.contactList}" var="contact">
+                    <lightning:recordViewForm recordId="{!contact.Id}" onjectApiName="Contact">
+                        <div class="slds-box slds-theme_default">
+                            <lightning:outputField fieldName="FirstName" />
+                            <lightning:outputField fieldName="LastName" />
+                            <lightning:outputField fieldName="Phone" />
+                            <lightning:outputField fieldName="Email" />
+                        </div>
+                    </lightning:recordViewForm>
+                    <br/>
+                </aura:iteration>
+            </div>
+
+            <div aura:id="recordEditForm" class="formHide">
+                <aura:iteration items="{!v.contactList}" var="contact">
                     <div class="slds-box slds-theme_default">
-                        <lightning:outputField fieldName="Name" />
-                        <lightning:outputField fieldName="Phone" />
-                        <lightning:outputField fieldName="Email" />
+                        <lightning:input value="{!contact.FirstName}" />
+                        <lightning:input value="{!contact.LastName}" />
+                        <lightning:input value="{!contact.Email}" type="email" />
+                        <!-- regex = regular expression-->
+                        <lightning:input value="{!contact.Phone}" type="tel" pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}"/>
+
                     </div>
-                </lightning:recordViewForm>
-                <br/>
-            </aura:iteration>
+                </aura:iteration>
+            </div>
         </p>
 
         <aura:set attribute="actions">
             <lightning:button label="New" onclick="{!c.newContact}" />
+
+            <lightning:button label="Edit" name="edit" variant="brand" onclick="{!c.editContacts}" />
         </aura:set>
     </lightning:card>
 </aura:component>	
