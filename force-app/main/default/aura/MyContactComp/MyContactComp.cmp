@@ -1,8 +1,16 @@
 
 <!-- this comp will be dropped to an account record page, so here recordId is the accountId -->
 <aura:component implements="flexipage:availableForRecordHome, force:hasRecordId" controller="MyContactController" access="global">
-    <aura:handler name="init" action="{!c.getContactsList}" value="{!this"/>
+    <aura:handler name="init" action="{!c.getContactsList}" value="{!this}"/>
     <aura:attribute name="contactList" type="List"/>
+    <aura:attribute name="contact" type="Contact"
+        default="{
+            'SObjectType': 'Contact',
+            'FirstName': '',
+            'LastName': '',
+            'Email': '',
+            'Phone': ''
+            }" />
 
     <lightning:card title="Contacts">
         <p class="slds-p-horizontal_small">
@@ -13,6 +21,8 @@
                 <aura:iteration items="{!v.contactList}" var="contact">
                     <lightning:recordViewForm recordId="{!contact.Id}" onjectApiName="Contact">
                         <div class="slds-box slds-theme_default">
+                            <lightning:input type="checkbox" value="{!contact.Id}" label="Mark for deletion" aura:id="deleteContact"/>
+                            < br/>
                             <lightning:outputField fieldName="FirstName" />
                             <lightning:outputField fieldName="LastName" />
                             <lightning:outputField fieldName="Phone" />
@@ -38,9 +48,43 @@
         </p>
 
         <aura:set attribute="actions">
+            <lightning:button name="contactModal" label="New Contact" onclick="{!c.openModal}" />
+            <lightning:button label="Delete" name="delete" variant="destructive" onclick="{!c.deleteContacts}" />
+
             <lightning:button label="New" onclick="{!c.newContact}" />
 
             <lightning:button label="Edit" name="edit" variant="brand" onclick="{!c.editContacts}" />
         </aura:set>
     </lightning:card>
-</aura:component>	
+
+    <!-- Contacts Modal Section -->
+    <div>
+        <section aura:id="contactModal" role="dialog" tabindex="-1" 
+            aria-labelledby="contactModalHeading" aria-modal="true" 
+            aria-describedby="contactModalBody" class="slds-modal">
+            <!-- Modal Container -->
+            <div class="slds-modal__container">
+                <!-- Modal Header ( consists of close button and heading of modal ) -->
+                <header class="slds-modal__header">
+                    <lightning:buttonIcon class="slds-modal__close" alternativeText="Close" iconName="utility:close" onclick="{!c.closeModal}" variant="bare-inverse" size="large"></lightning:buttonIcon>
+                    <h2 id="contactModalHeading" class="slds-text-heading_medium slds-hyphenate">New Contact</h2>
+                </header>
+                <!-- Modal Body ( consists of form ) -->
+                <div class="slds-modal__content slds-p-around_medium" id="contactModalBody">
+                    <lightning:input label="First Name" value="{!v.contact.FirstName}" />
+                    <lightning:input label="Last Name" value="{!v.contact.LastName}" required="true" />
+                    <lightning:input label="Email" value="{!v.contact.Email}" />
+                    <lightning:input label="Phone" value="{!v.contact.Phone}" />
+                </div>
+                <!-- Modal Footer ( consists of cancel and save buttons ) -->
+                <footer class="slds-modal__footer">
+                    <lightning:button onclick="{!c.closeModal}" variant="neutral">Cancel</lightning:button>
+                    <lightning:button onclick="{!c.createContact}" variant="brand" >Save</lightning:button>
+                </footer>
+            </div>
+        </section>
+        <!-- Modal Backdrop -->
+        <div aura:id="contactModalBackdrop" class="slds-backdrop"></div>
+    </div>
+
+</aura:component>

@@ -28,4 +28,38 @@ public with sharing class MyContactController {
             return resultMap;
         }
     }
+
+    @AuraEnabled
+    public static Map<String, String> deleteContactList(List<Id> contactIds) {
+        List<Contact> contactsToDelete = [SELECT Id FROM Contact WHERE Id in :contactIds];
+
+            Map<String, String> resultMap = new Map<String, String> ();
+            try {
+                // SObject or list of SObject
+                delete contactsToDelete;
+                resultMap.put('status', 'success');
+                resultMap.put('message', 'Contacts deleted sucecssfully');
+            } catch (Exception e) {
+                resultMap.put('status', 'error');
+                resultMap.put('message', e.getMessage());
+            }
+            return resultMap;
+    }
+
+    @AuraEnabled
+    public static Map<String, String> createContactRecord(Contact newContact) {
+
+        Map<String, String> resultMap = new Map<String, String> ();
+        try {
+            insert newContact;
+            resultMap.put('status', 'success');
+            resultMap.put('message', 'Contacts inserted sucecssfully');
+        } catch (Exception e) {
+            resultMap.put('status', 'error');
+            resultMap.put('message', e.getMessage());
+        }
+
+        return resultMap;
+    }
+
 }
