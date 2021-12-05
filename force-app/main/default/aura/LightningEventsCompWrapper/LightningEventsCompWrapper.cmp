@@ -1,0 +1,9 @@
+<aura:component>
+    <aura:handler name="totalIncomeComponentEvent" event="c:lightningComponentEvent" action="{!c.handleTotalIncomeComponentEvent}"
+        includeFacets="true" /> <!-- tell wrapper component to handler event too since it is not treat as parent of the inner component -->
+    <div class="wrapperComponent">
+        Wrapper comp Begin
+        {!v.body} <!-- LOOK OUT -->
+        Wrapper comp End
+    </div>
+</aura:component>	
